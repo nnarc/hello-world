@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
-import os, sys, argparse, logging
-from datetime import datetime
+import os
+import sys
+import argparse
+import logging
 
 # script info
 DESCRIPTION = 'Hello World with Logging and Argparse'
 VERSION = 0.1
+
 
 def main():
     logging.debug('Hello World! -vv')
@@ -18,13 +21,13 @@ def main():
         logging.debug('Reading input file %s' % args.inputfile)
 
         with open(args.inputfile, 'r') as fp:
-            logging.info('input file:\n-----------------\n' \
-                          + fp.read() + '\n-----------------')
+            logging.info(
+                "input file:\n" + "-"*20 + "\n{0}\n".format(fp.read()) + "-"*20)
 
         logging.debug('Finished reading input file')
 
-    except Exception, e:
-        logging.error("Unable to read input file: %s" % str(e))
+    except Exception, ex:
+        logging.error("Unable to read input file: %s" % str(ex))
 
     return 0
 
@@ -36,7 +39,7 @@ if __name__ == "__main__":
 
     # specify an optional script argument for version
     parser.add_argument(
-            '--version', # do not specify -v (reserved for verbosity)
+            '--version',  # do not specify -v (reserved for verbosity)
             action='version',
             version='%(prog)s ' + str(VERSION)
         )
@@ -62,7 +65,8 @@ if __name__ == "__main__":
             '-v', '--verbosity',
             action="count",
             default=0,
-            help='verbosity of logs (default is ERROR, use -v for INFO or -vv for DEBUG)'
+            help=('verbosity of logs ' +
+                  'default is ERROR, use -v for INFO or -vv for DEBUG')
         )
 
     # specify an optional script argument for logfile output
@@ -89,7 +93,7 @@ if __name__ == "__main__":
 
     try:
         # initialize the logger
-        if (args.logfile):
+        if args.logfile:
             # if a logfile was specified, output all logs to that file
             logging.basicConfig(
                 filename=args.logfile, filemode='w',
